@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popular </title>
+    <title>Popular Series</title>
     <link rel="stylesheet" href="/style.css" type="text/css">
     <script src="/index.js"></script>
 
@@ -14,13 +14,12 @@
 
 <body>
 
-    <nav>
-        <ul>
-            <li><a href="/index.html">Home</a></li>
-            <li><a href="/Paginas/popular.html"> Popular</a></li>
-            <li><a href="/Paginas/upcoming.html">Upcoming</a></li>
-        </ul>
-    </nav>
+    <div class="topnav">
+        <a href="/index.html">Home</a>
+        <a href="popular.html">Popular</a>
+        <a href="upcoming.html">Upcoming</a>
+        <input type="text" placeholder="Busca lo que quieras">
+    </div>
 
 
 
@@ -33,10 +32,12 @@
 
 
     <div id="container">
-        <script>
-            window.addEventListener('DOMContentLoaded', obtenerPopular());
-        </script>
+       
     </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', obtenerTopRated());
+    </script>
 
 </body>
 

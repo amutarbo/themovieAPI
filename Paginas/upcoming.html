@@ -12,28 +12,126 @@
 
 
 <body>
+    <script>
 
-    <nav>
-        <ul>
-            <li><a href="/index.html">Home</a></li>
-            <li><a href="/Paginas/popular.html"> Popular</a></li>
-            <li><a href="/Paginas/upcoming.html">Upcoming</a></li>
-        </ul>
-    </nav>
+        class AlbertoLoading extends HTMLElement {
+            constructor() {
+                super();
+                this.loadText = 'Cargando...';
+            }
+
+            cargarContenido(){
+                const styles = `<style>
+                
+                #loading{
+                    display: flex;
+                    align-items: center;
+                    position: fixed;
+                    z-index: 9;  
+                }
+
+                #spinner{
+                    width: 50px;
+                    height: 50px;
+                    margin: 20px;
+                    border: 3px solid var(--primary-color);
+                    border-radius: 50%;
+                    border-top-color: white;
+                    animation: rotar 1s ease-in-out infinite;
+                }
+
+                @keyframes rotar{
+                    to {transform: rotate(360deg)};
+                }
+
+                #wrapper-login{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: fixed;
+                    z-index: 5;  
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100vh;
+                    background-color: rgba(255, 255, 255, 0.231);
+                    backdrop-filter: blur(2px);
+                }
+                </style>`;
+
+                this.innerHTML = `
+                    ${styles}
+                    <div id="wrapper-login">
+                        <div id="loading">
+                            <div id="spinner"></div>
+                            <div>${this.loadText}</div>
+                        </div>
+                    </div>
+                 `;
+
+            }
+
+            connectedCallback() {      
+                this.cargarContenido()        
+            }
+
+            disconnectedCallback() { }
+
+            
+            attributeChangedCallback(name, oldValue, newValue) {
+                console.log("enta")
+                if (name === 'loadText') {
+                    this.loadText = newValue;
+                    this.cargarContenido()
+                }
+            }
+
+            static get observedAttributes() {
+                return ['loadText']
+            }
+        }
+
+        window.customElements.define('al-loader', AlbertoLoading)
+
+    </script>
+    <!-- ONload = DomContentLoaded -->
+    <div class="topnav">
+        <a href="/index.html">Home</a>
+        <a href="popular.html">Popular</a>
+        <a href="upcoming.html">Upcoming</a>
+        <input id="searchbar" onkeyup="busqueda()" name="busqueda" type="text" placeholder="Busca lo que quieras">
+    </div>
 
     <div class="head-body">
         <h1>Upcoming</h1>
     </div>
 
-   
+
     <div id="container">
-        <script>
-            window.addEventListener('DOMContentLoaded', obtenerUpcoming());
-        </script>
+
     </div>
 
+    <div id="btn_container">
+        <button id="btn-back" disabled onclick="obtener('upcoming', {page: CURRENT_PAGE - 1})">Anterior</button>
+        <button onclick="obtener('upcoming', {page: CURRENT_PAGE + 1})">Siguiente</button>
+    </div>
+
+    <div id="wrapper-login" ></div>
+
+    <al-loader id="loading" loadText="Cargando películas..."></al-loader>
+
+    <script>
+        document.getElementById('loading').loadText="Cargando películas...";
+        window.addEventListener('DOMContentLoaded', obtener('upcoming'));
+    </script>
+
+
+
+    
 
 </body>
+
+
 
 
 </html>
